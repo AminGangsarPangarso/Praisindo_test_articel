@@ -1,13 +1,12 @@
 import SearchArticels from "./components/searchArticels";
 import { useState, useEffect } from "react"
-// import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 
 function App() {
   const [articels, setArticel] = useState([])
   const [search, setSearch] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const urlApi = async () => {
@@ -17,7 +16,7 @@ function App() {
         const dataArticels = await res.json()
         console.log(dataArticels.response?.docs);
         setArticel(dataArticels.response?.docs)
-        // setIsLoading(false);
+        setIsLoading(true);
       } catch (error) {
         console.error(error)
       }
@@ -25,29 +24,40 @@ function App() {
 
 
     urlApi()
-  }, [])
+  }, [search])
 
   return (
-   
-    <div className="">
-   <SearchArticels/>
-   {articels ?.map((itemArticels) => (
-  <Card key={itemArticels._id} className="container mb-4 py-2">
-    <h3 className="">{itemArticels.main}</h3>
-    <h3 className="">{itemArticels.abstract}</h3>
-    <Card.Body>
-      <Card.Title>{itemArticels.source}</Card.Title>
-      <Card.Text>
-        <h5>{itemArticels.section_name}</h5>
-        <p>{itemArticels.lead_paragraph}</p>
-      </Card.Text>
-    <a href={itemArticels.web_url}target="_blank ">Website Articels</a>
-    </Card.Body>
-  </Card>
-))}
 
+    <div className=" ">
+      <SearchArticels searchText={(text) => setSearch(text)} />
 
-</div>
+      <div className="">
+        {isLoading ? (
+
+          articels?.map((itemArticels) => (
+            <Card key={itemArticels._id} className="container mb-4 py-2 shadow-lg">
+              <h1 className="">{itemArticels.headline.main}</h1>
+              <hr />
+              <h5 className="">{itemArticels.abstract}</h5>
+              <Card.Body>
+                <Card.Title>{itemArticels.source}</Card.Title>
+                <Card.Text>
+                  <h5>{itemArticels.section_name} </h5>
+                  <p>{itemArticels.lead_paragraph}</p>
+                  <p>{itemArticels.pub_date}</p>
+                </Card.Text>
+                <a href={itemArticels.web_url} target="_blank ">Website Articels</a>
+              </Card.Body>
+            </Card>
+          ))
+
+        ) : (
+          <h4>Loading...</h4>
+        )}
+      </div>
+
+    </div>
+
   )
 }
 

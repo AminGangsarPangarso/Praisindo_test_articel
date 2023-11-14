@@ -1,38 +1,29 @@
-import Carousel from 'react-bootstrap/Carousel';
-// import Gambar1 from "../assets/Gambar1"
-// import Gambar2 from "../assets/Gambar2"
+import { useState } from "react"
 
+const SearchArticels = ({ searchText }) => {
 
-const SearchArticels = () => {
+  const [text, setText] = useState('')
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    searchText(text)
+  }
   return (
     <>
-    <div className="bg-articels mb-5 container">
-    <Carousel>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src=''
-            alt="First slide"
-          />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src=''
-            alt="Second slide"
-          />
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        
-      </Carousel>
-    </div>
+      <div className="container mt-5 mb-5 bg-image ">
+        <div className="text-center ">
+          <form action="" onSubmit={handleSubmit} className="d-inline-block">
+            <div className="mb-3 gap-2 d-flex ">
+           
+              <input type="text" className="form-control w-auto " placeholder="example:books"  
+                onChange={(e) => setText(e.target.value)}     
+               />
+               
+              <button type='submit' className="btn btn-primary">Search</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </>
   )
 }
