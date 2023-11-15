@@ -14,7 +14,6 @@ function App() {
         const res = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${search}&api-key=${import.meta.env.VITE_ARTICEL_API_KEY}`
         );
         const dataArticels = await res.json()
-        console.log(dataArticels.response?.docs);
         setArticel(dataArticels.response?.docs)
         setIsLoading(true);
       } catch (error) {
